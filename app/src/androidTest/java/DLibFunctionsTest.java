@@ -1,7 +1,7 @@
 import android.content.Context;
-import android.support.test.InstrumentationRegistry;
-import android.support.test.runner.AndroidJUnit4;
-import android.test.suitebuilder.annotation.SmallTest;
+import androidx.test.platform.app.InstrumentationRegistry;
+import androidx.test.ext.junit.runners.AndroidJUnit4;
+import androidx.test.filters.SmallTest ;
 
 import com.tzutalin.dlib.PedestrianDet;
 import com.tzutalin.dlib.VisionDetRet;
@@ -20,7 +20,7 @@ public class DLibFunctionsTest {
 
     @Before
     public void setup() {
-        mInstrumantationCtx = InstrumentationRegistry.getTargetContext();
+        mInstrumantationCtx = InstrumentationRegistry.getInstrumentation().getTargetContext();
     }
 
     @Test

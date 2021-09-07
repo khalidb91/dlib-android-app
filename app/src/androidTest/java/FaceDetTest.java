@@ -1,8 +1,8 @@
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Point;
-import android.support.test.runner.AndroidJUnit4;
-import android.test.suitebuilder.annotation.SmallTest;
+import androidx.test.ext.junit.runners.AndroidJUnit4;
+import androidx.test.filters.SmallTest ;
 
 import com.tzutalin.dlib.Constants;
 import com.tzutalin.dlib.FaceDet;

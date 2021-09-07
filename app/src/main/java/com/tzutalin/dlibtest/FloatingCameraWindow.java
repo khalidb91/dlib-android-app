@@ -22,7 +22,7 @@ import android.graphics.Point;
 import android.os.Build;
 import android.os.Handler;
 import android.os.Looper;
-import android.support.annotation.UiThread;
+import androidx.annotation.UiThread;
 import android.util.Log;
 import android.view.Display;
 import android.view.Gravity;
