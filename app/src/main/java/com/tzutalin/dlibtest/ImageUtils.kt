@@ -13,37 +13,34 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+package com.tzutalin.dlibtest
 
-package com.tzutalin.dlibtest;
-
-import android.graphics.Bitmap;
-import android.os.Environment;
-import androidx.annotation.Keep;
-
-import java.io.File;
-import java.io.FileOutputStream;
-
-import timber.log.Timber;
+import android.graphics.Bitmap
+import android.os.Environment
+import android.util.Log
+import androidx.annotation.Keep
+import java.io.File
+import java.io.FileOutputStream
 
 /**
  * Utility class for manipulating images.
- **/
-public class ImageUtils {
-    private static final String TAG = ImageUtils.class.getSimpleName();
+ */
+object ImageUtils {
+
+    private val TAG = ImageUtils::class.java.simpleName
 
     /**
      * Utility method to compute the allocated size in bytes of a YUV420SP image
      * of the given dimensions.
      */
-    public static int getYUVByteSize(final int width, final int height) {
+    fun getYUVByteSize(width: Int, height: Int): Int {
         // The luminance plane requires 1 byte per pixel.
-        final int ySize = width * height;
+        val ySize = width * height
 
         // The UV plane works on 2x2 blocks, so dimensions with odd size must be rounded up.
         // Each 2x2 block takes 2 bytes to encode, one each for U and V.
-        final int uvSize = ((width + 1) / 2) * ((height + 1) / 2) * 2;
-
-        return ySize + uvSize;
+        val uvSize = (width + 1) / 2 * ((height + 1) / 2) * 2
+        return ySize + uvSize
     }
 
     /**
@@ -51,28 +48,25 @@ public class ImageUtils {
      *
      * @param bitmap The bitmap to save.
      */
-    public static void saveBitmap(final Bitmap bitmap) {
-        final String root =
-                Environment.getExternalStorageDirectory().getAbsolutePath() + File.separator + "dlib";
-        Timber.tag(TAG).d(String.format("Saving %dx%d bitmap to %s.", bitmap.getWidth(), bitmap.getHeight(), root));
-        final File myDir = new File(root);
-
+    fun saveBitmap(bitmap: Bitmap?) {
+        val root = Environment.getExternalStorageDirectory().absolutePath + File.separator + "dlib"
+        Log.d(TAG, String.format("Saving %dx%d bitmap to %s.", bitmap!!.width, bitmap.height, root))
+        val myDir = File(root)
         if (!myDir.mkdirs()) {
-            Timber.tag(TAG).e("Make dir failed");
+            Log.e(TAG, "Make dir failed")
         }
-
-        final String fname = "preview.png";
-        final File file = new File(myDir, fname);
+        val fname = "preview.png"
+        val file = File(myDir, fname)
         if (file.exists()) {
-            file.delete();
+            file.delete()
         }
         try {
-            final FileOutputStream out = new FileOutputStream(file);
-            bitmap.compress(Bitmap.CompressFormat.PNG, 99, out);
-            out.flush();
-            out.close();
-        } catch (final Exception e) {
-            Timber.tag(TAG).e("Exception!", e);
+            val out = FileOutputStream(file)
+            bitmap.compress(Bitmap.CompressFormat.PNG, 99, out)
+            out.flush()
+            out.close()
+        } catch (e: Exception) {
+            Log.e(TAG, "Exception!", e)
         }
     }
 
@@ -87,8 +81,9 @@ public class ImageUtils {
      * @param height   The height of the input image.
      * @param halfSize If true, downsample to 50% in each dimension, otherwise not.
      */
-    public static native void convertYUV420SPToARGB8888(
-            byte[] input, int[] output, int width, int height, boolean halfSize);
+    external fun convertYUV420SPToARGB8888(
+        input: ByteArray?, output: IntArray?, width: Int, height: Int, halfSize: Boolean
+    )
 
     /**
      * Converts YUV420 semi-planar data to ARGB 8888 data using the supplied width
@@ -105,17 +100,18 @@ public class ImageUtils {
      * @param output        A pre-allocated array for the ARGB 8:8:8:8 output data.
      */
     @Keep
-    public static native void convertYUV420ToARGB8888(
-            byte[] y,
-            byte[] u,
-            byte[] v,
-            int[] output,
-            int width,
-            int height,
-            int yRowStride,
-            int uvRowStride,
-            int uvPixelStride,
-            boolean halfSize);
+    external fun convertYUV420ToARGB8888(
+        y: ByteArray?,
+        u: ByteArray?,
+        v: ByteArray?,
+        output: IntArray?,
+        width: Int,
+        height: Int,
+        yRowStride: Int,
+        uvRowStride: Int,
+        uvPixelStride: Int,
+        halfSize: Boolean
+    )
 
     /**
      * Converts YUV420 semi-planar data to RGB 565 data using the supplied width
@@ -128,8 +124,9 @@ public class ImageUtils {
      * @param height The height of the input image.
      */
     @Keep
-    public static native void convertYUV420SPToRGB565(
-            byte[] input, byte[] output, int width, int height);
+    external fun convertYUV420SPToRGB565(
+        input: ByteArray?, output: ByteArray?, width: Int, height: Int
+    )
 
     /**
      * Converts 32-bit ARGB8888 image data to YUV420SP data.  This is useful, for
@@ -142,8 +139,9 @@ public class ImageUtils {
      * @param height The height of the input image.
      */
     @Keep
-    public static native void convertARGB8888ToYUV420SP(
-            int[] input, byte[] output, int width, int height);
+    external fun convertARGB8888ToYUV420SP(
+        input: IntArray?, output: ByteArray?, width: Int, height: Int
+    )
 
     /**
      * Converts 16-bit RGB565 image data to YUV420SP data.  This is useful, for
@@ -156,6 +154,7 @@ public class ImageUtils {
      * @param height The height of the input image.
      */
     @Keep
-    public static native void convertRGB565ToYUV420SP(
-            byte[] input, byte[] output, int width, int height);
+    external fun convertRGB565ToYUV420SP(
+        input: ByteArray?, output: ByteArray?, width: Int, height: Int
+    )
 }

@@ -34,7 +34,7 @@ public final class VisionDetRet {
     private int mTop;
     private int mRight;
     private int mBottom;
-    private ArrayList<Point> mLandmarkPoints = new ArrayList<>();
+    private final ArrayList<Point> mLandmarkPoints = new ArrayList<>();
 
     VisionDetRet() {
     }
