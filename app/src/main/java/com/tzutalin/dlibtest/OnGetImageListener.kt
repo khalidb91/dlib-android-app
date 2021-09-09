@@ -75,8 +75,8 @@ class OnGetImageListener : OnImageAvailableListener {
 
     fun deInitialize() {
         synchronized(this@OnGetImageListener) {
-            faceDet.release()
-            window.release()
+            faceDet?.release()
+            window?.release()
         }
     }
 
@@ -201,10 +201,10 @@ class OnGetImageListener : OnImageAvailableListener {
 
         inferenceHandler?.post {
             if (!File(Constants.getFaceShapeModelPath()).exists()) {
-                transparentTitleView?.text = "Copying landmark model to " + Constants.getFaceShapeModelPath()
+                //transparentTitleView?.text = "Copying landmark model to " + Constants.getFaceShapeModelPath()
                 FileUtils.copyFileFromRawToOthers(
                     context!!,
-                    R.raw.shape_predictor_68_face_landmarks,
+                    R.raw.face_landmarks,
                     Constants.getFaceShapeModelPath()
                 )
             }
@@ -212,11 +212,11 @@ class OnGetImageListener : OnImageAvailableListener {
             var results: List<VisionDetRet>?
 
             synchronized(this@OnGetImageListener) {
-                results = faceDet.detect((croppedBitmap)!!)
+                results = croppedBitmap?.let { bitmap -> faceDet.detect(bitmap) }
             }
 
             val endTime = System.currentTimeMillis()
-            transparentTitleView?.text = "Time cost: " + ((endTime - startTime) / 1000f).toString() + " sec"
+            //transparentTitleView?.text = "Time cost: " + ((endTime - startTime) / 1000f).toString() + " sec"
 
             // Draw on bitmap
             if (results != null) {

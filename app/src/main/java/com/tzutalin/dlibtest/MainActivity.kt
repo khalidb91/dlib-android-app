@@ -249,7 +249,7 @@ open class MainActivity : AppCompatActivity() {
                     }
                     FileUtils.copyFileFromRawToOthers(
                         applicationContext,
-                        R.raw.shape_predictor_68_face_landmarks,
+                        R.raw.face_landmarks,
                         targetPath
                     )
                 }
@@ -303,7 +303,7 @@ open class MainActivity : AppCompatActivity() {
                     showToast("Copy landmark model to $targetPath")
                     FileUtils.copyFileFromRawToOthers(
                         applicationContext,
-                        R.raw.shape_predictor_68_face_landmarks,
+                        R.raw.face_landmarks,
                         targetPath
                     )
                 }

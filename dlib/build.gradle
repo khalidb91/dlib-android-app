@@ -43,10 +43,10 @@ configurations {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation 'androidx.appcompat:appcompat:1.0.0'
-    javadocDeps 'androidx.appcompat:appcompat:1.0.0'
-    implementation 'androidx.annotation:annotation:1.0.0'
-    javadocDeps 'androidx.annotation:annotation:1.0.0'
+    implementation 'androidx.appcompat:appcompat:1.3.1'
+    javadocDeps 'androidx.appcompat:appcompat:1.3.1'
+    implementation 'androidx.annotation:annotation:1.2.0'
+    javadocDeps 'androidx.annotation:annotation:1.2.0'
 }
 
 buildscript {
@@ -70,7 +70,7 @@ def GetNDKDir()  {
         localProperties.load(project.rootProject.file('local.properties').newDataInputStream())
         def ndkDir = localProperties.getProperty('ndk.dir')
         ndk_path = ndkDir != null ? ndkDir + lim : null;
-    } catch (java.io.FileNotFoundException e) {
+    } catch (FileNotFoundException e) {
         println 'local.properties file not found'
     }
 
@@ -192,4 +192,7 @@ if(project.rootProject.file('local.properties').isFile()) {
         }
         configurations = ['archives']
     }
+}
+repositories {
+    mavenCentral()
 }

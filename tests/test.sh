@@ -1,4 +1,4 @@
-#/bin/bash
+#!/bin/bash
 echo "$(adb shell ls /sdcard/ | egrep -i shape_predictor_68_face_landmarks)"
 
 if (adb shell ls /sdcard/ | egrep -i shape_predictor_68_face_landmarks) 2> /dev/null; then
